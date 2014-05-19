@@ -413,7 +413,11 @@ func (c *Consumer) makeAuthorizedRequest(method string, url string, dataLocation
 	if userParams != nil {
 		for i := range paramPairs {
 			allParams.Add(paramPairs[i].key, paramPairs[i].value)
-			thisPair := escape(paramPairs[i].key) + "=" + escape(paramPairs[i].value)
+			thisPair := escape(paramPairs[i].key)
+			if len(paramPairs[i].value) > 0 {
+				thisPair += "=" + escape(paramPairs[i].value)
+			}
+
 			if dataLocation == LOC_URL {
 				queryParams += separator + thisPair
 			} else {
